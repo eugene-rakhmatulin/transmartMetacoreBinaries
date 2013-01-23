@@ -1,13 +1,28 @@
-transmartBinaries
+transmartMetacoreBinaries
 =================
 
-This repository contains a pre-packaged version of Transmart with MetaCore and Cortellis integration functionality.
-The source code is available in the branch "metacore-integration" - please, check out BOTH Rmodules and transmartApp if you want to build transmart from the source.
+This repository contains a pre-packaged version of tranSMART with MetaCore integration functionality.
+The source code is available in the branch "metacore-integration" - please, check out *BOTH* Rmodules and transmartApp if you want to build tranSMART from the source.
+
+IMPORTANT INFORMATION
+---------------------
+
+At this moment, full MetaCore enrichment capability in Marker Selection workflow works only for Affymetrix platforms. Free enrichment works for all platforms. 
+The patch to fix enrichment functionality in MetaCore is ready and should be deployed on production system in February.
+
+RELEASE NOTES
+-------------
+
+- Version 1.0-MC-130116
+
+Initial release. Based on pre-Postgres 1.0GA branch of tranSMART.
+MetaCore enrichement functionality.
+Heatmap in Marker Selection workflow is displaying gene names now
 
 PRE-REQUISITES
 --------------
 
-For both Cortellis integration and enrichment functionality you need an ability to access web addresses in the Internet for your Transmart server.
+For MetaCore enrichment functionality you need an ability to access web addresses in the Internet for your tranSMART server.
 If you use the proxy, you need to specify proxy settings in <tomcat_folder>/bin/catalina.sh in JAVA_OPTS:
 
 ```bash
@@ -26,28 +41,8 @@ If you use the proxy, you need to specify proxy settings in <tomcat_folder>/bin/
 	# OS specific support.  $var _must_ be set to either true or false.
 ```
 
-### 1. CORTELLIS
 
-For Cortellis integration, you need to have working Cortellis API credentials.
-Edit ~/.grails/transmartApp/Config.groovy and add the following lines:
-
-```groovy
-	com.recomdata.searchtool.cortellisEnabled = true
-	com.thomsonreuters.transmart.cortellisAPILogin = 'your_API_login'
-	com.thomsonreuters.transmart.cortellisAPIPassword = 'your_API_password'
-```
-
-Also, you'll need to copy an SSL certificate to your server and specify it in the configuration file:
-
-com.thomsonreuters.transmart.cortellisCertStore = '/path/to/cortellis_truststore.jks'
-
-Then, you need to specify metacoreURL in order to be able to open MetaCore maps from Cortellis search results:
-
-```groovy
-	com.thomsonreuters.transmart.metacoreURL = 'https://portal.genego.com'
-```
-
-### 2. ENRICHMENT FUNCTIONALITY (FREE & METACORE)
+### 1. ENRICHMENT FUNCTIONALITY (FREE & METACORE)
 
 For both free and MetaCore enrichments, you need to specify the following line in your ~/.grails/transmartApp/Config.groovy:
 
@@ -57,7 +52,7 @@ For both free and MetaCore enrichments, you need to specify the following line i
 
 You don't need to specify any extra settings in order for FREE enrichment to work
 
-### 3. FULL METACORE ENRICHMENT FUNCTIONALITY
+### 2. FULL METACORE ENRICHMENT FUNCTIONALITY
 
 First of all, you need to create a special table that will store user preferences.
 Please, execute create_user_settings.sql under "searchapp" or "system" Oracle user, otherwise you will not be able to use full enrichment functionality.
@@ -66,6 +61,7 @@ If you want all users use their personal MetaCore account, you don't need to do 
 If you want an ability to use common account for enrichments (users will have a choice), then you need to specify default MetaCore credentials in ~/.grails/transmartApp/Config.groovy:
 
 ```groovy
+	com.thomsonreuters.transmart.metacoreURL = 'https://portal.genego.com'
 	com.thomsonreuters.transmart.metacoreDefaultLogin = 'metacore_login'
 	com.thomsonreuters.transmart.metacoreDefaultPassword = 'metacore_password'
 ```
@@ -73,7 +69,7 @@ If you want an ability to use common account for enrichments (users will have a 
 BINARY INSTALLATION
 -------------------
 
-To install Transmart WAR, just follow the procedure:
+To install tranSMART WAR, just follow the procedure:
 
 1. Make the database changes as described earlier in this manual
 2. Shutdown Tomcat
