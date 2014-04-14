@@ -6,11 +6,6 @@ The source code is available in the branch "metacore-integration" - please, chec
 
 Please, refer to the PDF document within this repository for user documentation.
 
-IMPORTANT INFORMATION
----------------------
-
-At this moment, full MetaCore enrichment capability in Marker Selection workflow works only for Affymetrix platforms. Free enrichment works for all platforms. 
-The patch to fix enrichment functionality in MetaCore is ready and should be deployed on production system in February.
 
 RELEASE NOTES
 -------------
